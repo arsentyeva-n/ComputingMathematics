@@ -18,27 +18,29 @@ B = [32, 60, 84, 96, 23]
 n = len(A)
 X = [0] * n
 X2 = [0] * n
+k = 0
+E = 0.001
 
-E = 0.00001
+# # Проверка, что сумма всех модулей элементов в i строке кроме элемента по диагонали меньше модуля элемента по диагонали 
+# for i in range(n):
+#     if sum(abs(A[i])) > 2 * abs(A[i][i]) : exit(); #не работает
 
-# Проверка, что модуль суммы всех элементов в i строке кроме элемента по диагонали меньше элемента по диагонали 
-for i in range(n):
-    if abs(sum(A[i]) - A[i][i]) > abs(A[i][i]) : exit();
-
-while True:  
+while True:
+    k = 0
     for i in range(n):
-        X[i] = 0
+        X[i] = B[i]
         # Нахождение значения X[i]
         for j in range(n):
             X[i] = X[i] - A[i][j] * X2[j]
-        X[i] = (X[i] + B[i] + A[i][i] * X2[i]) / A[i][i] 
-     
-    # Цикл работает, пока не достигнет точности E 
-    if abs(X[n-1] - X2[n-1]) and abs(X[0] - X2[0]) < E : break;
+        X[i] = (X[i]  + A[i][i] * X2[i]) / A[i][i] 
     # Вывод значений
     for i in range(n):
-        print("{:0.5f}".format(X[i]), end=' ')
+        print("{:0.4f}".format(X[i]), end=' ')
     print()
+    # Цикл работает, пока все переменные не достигнут точности E
+    for i in range(n):
+        if abs(X[n-1] - X2[n-1]) < E : k+=1;
+    if k == n: break;
     # Сохранение X[i] для нового вычисления
     for j in range(n):
         X2[j] = X[j]
